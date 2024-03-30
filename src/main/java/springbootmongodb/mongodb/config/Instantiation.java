@@ -6,11 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import springbootmongodb.mongodb.domain.Post;
 import springbootmongodb.mongodb.domain.User;
 import springbootmongodb.mongodb.dto.AuthorDTO;
+import springbootmongodb.mongodb.dto.CommentDTO;
 import springbootmongodb.mongodb.repository.PostRepository;
 import springbootmongodb.mongodb.repository.UserRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.List;
 import java.util.TimeZone;
 
 @Configuration
@@ -47,6 +49,13 @@ public class Instantiation implements CommandLineRunner {
                 "Bom dia",
                 "Acordei Feliz hoje!",
                 new AuthorDTO(maria));
+
+        CommentDTO c1 = new CommentDTO("Boa viajem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+        CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("22/03/2018"), new AuthorDTO(bob));
+        CommentDTO c3 = new CommentDTO("Tenha um ótimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(c1, c2));
+        post2.getComments().add(c3);
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
